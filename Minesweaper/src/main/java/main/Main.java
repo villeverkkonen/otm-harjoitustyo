@@ -9,5 +9,6 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         
         Minesweaper minesweaper = new Minesweaper(scanner);
+        minesweaper.start();
     }
 }
