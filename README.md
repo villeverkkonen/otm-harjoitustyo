@@ -19,4 +19,5 @@ Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
 
 ### Dokumentaatio
 [Vaatimusmaarittely](dokumentaatio/vaatimusmaarittely.md)
+<br />
 [Työaikakirjanpito](dokumentaatio/tyoaikakirjanpito.md)
