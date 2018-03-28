@@ -21,4 +21,4 @@ Testikattavuusraportti luodaan komennolla
 ```
 mvn jacoco:report
 ```
-Kattavuusraporttia voi tarkastella avaamalla selaimella tiedoston *targer/site/jacoco/index.html*
+Kattavuusraporttia voi tarkastella avaamalla selaimella tiedoston *target/site/jacoco/index.html*
