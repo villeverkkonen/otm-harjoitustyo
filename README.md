@@ -10,10 +10,15 @@ Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
 
 ## Komentorivitoiminnot
 
-# Testaus
+### Testaus
 
 Testit suoritetaan komennolla
-``` mvn test ```
+```
+mvn test
+```
 Testikattavuusraportti luodaan komennolla
-``` mvn jacoco:report ```
+
+```
+mvn jacoco:report
+```
 Kattavuusraporttia voi tarkastella avaamalla selaimella tiedoston *targer/site/jacoco/index.html*
