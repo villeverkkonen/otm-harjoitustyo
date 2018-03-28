@@ -1,23 +1,19 @@
-# OTM-Harjoitustyö
-
-**Tehtävät**
-
-*Viikko 1*
-- [komentorivi.txt](laskarit/viikko1/komentorivi.txt)
-- [gitlog.txt](laskarit/viikko1/gitlog.txt)
-
-<br/>
-
-*Viikko 2*
-- [Unicafen testikattavuus.png](laskarit/viikko2/testikattavuus.png)
-
-<br/>
-
-## Miinaharava
+# Miinaharava
 
 Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
 
-### Dokumentaatio
+## Dokumentaatio
 [Vaatimusmaarittely](dokumentaatio/vaatimusmaarittely.md)
 <br />
 [Työaikakirjanpito](dokumentaatio/tyoaikakirjanpito.md)
+<br />
+
+## Komentorivitoiminnot
+
+# Testaus
+
+Testit suoritetaan komennolla
+``` mvn test ```
+Testikattavuusraportti luodaan komennolla
+``` mvn jacoco:report ```
+Kattavuusraporttia voi tarkastella avaamalla selaimella tiedoston *targer/site/jacoco/index.html*
