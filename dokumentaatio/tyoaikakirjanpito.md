@@ -4,4 +4,6 @@
 |-------|------|-----------|
 | 25.3. | 2,5  | Vaatimusmäärittelyt |
 | 28.3. | 3    | Tekstikäyttöliittymä ja testi |
-|		| = 5,5|		   |
+| 14.4. | 1	   | JavaFX:n käyttöönottoa |
+| 16.4. | 3    | Suht toimiva graafinen UI jo |
+|		| = 9,5|		   |
