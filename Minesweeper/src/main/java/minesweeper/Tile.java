@@ -10,14 +10,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Tile extends StackPane {
-    private int x, y;
-    private boolean hasBomb;
+    private final int x, y;
+    private final boolean hasBomb;
     private boolean isOpen = false;
     private final int tileSize;
     private final int xTiles;
     private final int yTiles;
 
-    private Rectangle border;
+    private final Rectangle border;
     private Text text = new Text();
     private Tile[][] grid;
 
@@ -31,10 +31,9 @@ public class Tile extends StackPane {
         this.yTiles = yTiles;
         this.grid = grid;
         
-
         border.setStroke(Color.RED);
         
-        text.setFont(Font.font(18));
+        text.setFont(Font.font(28));
         text.setText(this.hasBomb ? "X" : "");
         text.setVisible(false);
         
@@ -57,6 +56,10 @@ public class Tile extends StackPane {
         
         if (this.text.getText().isEmpty()) {
             getNeighbours(this, this.grid).forEach(Tile::open);
+        }
+        
+        if (this.hasBomb) {
+            Minesweeper.endGame();
         }
     }
     
@@ -108,6 +111,4 @@ public class Tile extends StackPane {
     public void setText(String text) {
         this.text.setText(text);
     }
-    
-    
 }

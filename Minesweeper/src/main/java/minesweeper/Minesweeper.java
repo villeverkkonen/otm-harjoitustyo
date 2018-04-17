@@ -1,138 +1,99 @@
+
 package minesweeper;
 
-import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
+import javafx.application.Application;
+import static javafx.application.Application.launch;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public class Minesweeper {
+public class Minesweeper extends Application {
     
-    private final Scanner scanner;
-    private String[][] gameField;
-    private String[][] displayField;
-    private int fieldSize;
-    private int gamePoints;
-    private boolean gameIsOn;
+    private MinesweeperService minesweeperService;
+    private static Stage WINDOW;
+    private Scene startScreen, gameScreen, endScreen;
+    private static Button startButton;
     
-    public Minesweeper(Scanner scanner, int fieldSize) {
-        this.scanner = scanner;
-        this.fieldSize = fieldSize;
-        this.gameField = new String[fieldSize][fieldSize];
-        this.displayField = new String[fieldSize][fieldSize];
-        this.gamePoints = 0;
-        this.gameIsOn = true;
-    }
-    
-    public void start() {
-        createDisplayField();
-        createGameField();
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        createStartButton();
         
-        System.out.print("Nimimerkki: ");
-        String nickname = this.scanner.nextLine();
-        System.out.println();
-        System.out.println("Hauskaa peliä " + nickname + "!");
-
-        while (this.gameIsOn) {
-            System.out.println();
-            printField(this.displayField);
-            doSelection();
-        }
+        this.minesweeperService = new MinesweeperService();
         
-        gameOver();
-    }
-    
-    public void doSelection() {
-        int selectionY = 0;
-        int selectionX = 0;
-        System.out.print("Anna Y-akselin koordinaatti 0-" + (this.fieldSize - 1) + ": ");
-        try {
-            selectionY = this.scanner.nextInt();
-            while (selectionY >= this.fieldSize) {
-                System.out.println("Numeron pitää olla väliltä 0-" + (this.fieldSize - 1));
-                System.out.print("Anna Y-akselin koordinaatti 0-" + (this.fieldSize - 1) + ": ");
-                selectionY = this.scanner.nextInt();
-            }
-        } catch (Exception e) {
-            System.out.println("Error:");
-            System.out.println(e);
-        }
-        System.out.print("Anna X-akselin koordinaatti 0-" + (this.fieldSize - 1) + ": ");
-        try {
-            selectionX = this.scanner.nextInt();
-            while (selectionX >= this.fieldSize) {
-                System.out.println("Numeron pitää olla väliltä 0-" + (this.fieldSize - 1));
-                System.out.print("Anna X-akselin koordinaatti 0-" + (this.fieldSize - 1) + ": ");
-                selectionX = this.scanner.nextInt();
-            }
-        } catch (Exception e) {
-            System.out.println("Error:");
-            System.out.println(e);
-        }
+        this.WINDOW = primaryStage;
+        this.WINDOW.setTitle("Miinaharava");
+        this.startScreen = new Scene(createStartScreen());
         
-        String selectedFieldPlace = this.gameField[selectionY][selectionX];
-        this.displayField[selectionY][selectionX] = selectedFieldPlace;
+        this.WINDOW.setScene(this.startScreen);
+        this.WINDOW.show();
+    }
+    
+    public Parent createStartScreen() {
+        GridPane startGrid = new GridPane();
+        startGrid.setAlignment(Pos.CENTER);
+        startGrid.setHgap(10);
+        startGrid.setVgap(10);
+        startGrid.setPadding(new Insets(25, 25, 25, 25));
+        startGrid.setPrefSize(600, 600);
         
-        if (selectedFieldPlace.equals(" X ")) {
-            this.gameIsOn = false;
-        } else if (selectedFieldPlace.equals("   ")) {
-            this.gamePoints++;
-        }
-    }
-    
-    public void gameOver() {
-        System.out.println();
-        System.out.println("Peli loppui!");
-        System.out.println();
-        printField(this.displayField);
-        System.out.println();
-        System.out.println("Pisteesi: " + this.gamePoints);
-    }
-    
-    public void createDisplayField() {
-        String[][] createdDisplayField = new String[this.fieldSize][this.fieldSize];
+        Label infoText = new Label();
+        infoText.setText("Paina nappia aloittaaksesi pelin.");
+        infoText.setFont(Font.font(32));
         
-        // Create display field on start
-        for (int y = 0; y < this.fieldSize; y++) {
-            for (int x = 0; x < this.fieldSize; x++) {
-                createdDisplayField[y][x] = " # ";
-            }
-        }
-        this.displayField = createdDisplayField;
-    }
-    
-    public void createGameField() {
-        String[][] createdGameField = new String[this.fieldSize][this.fieldSize];
+        startGrid.add(infoText, 0, 0);
+        startGrid.add(this.startButton, 0, 3);
         
-        // Create game field, first all empty spaces
-        for (int y = 0; y < this.fieldSize; y++) {
-            for (int x = 0; x < this.fieldSize; x++) {
-                createdGameField[y][x] = "   ";
-            }
-        }
+        return startGrid;
+    }
+    
+    public static void endGame() {
+        GridPane endGrid = new GridPane();
+        endGrid.setAlignment(Pos.CENTER);
+        endGrid.setHgap(10);
+        endGrid.setVgap(10);
+        endGrid.setPadding(new Insets(25, 25, 25, 25));
+        endGrid.setPrefSize(600, 600);
         
-        // Then add bombs amount of fieldSize * 1.5
-        int bombCount = 0;
-        while (bombCount < this.fieldSize * 1.5) {
-            int bombY = ThreadLocalRandom.current().nextInt(0, this.fieldSize);
-            int bombX = ThreadLocalRandom.current().nextInt(0, this.fieldSize);
-            if (createdGameField[bombY][bombX].equals("   ")) {
-                createdGameField[bombY][bombX] = " X ";
-                bombCount++;
-            }
-        }
-        this.gameField = createdGameField;
+        Label endText1 = new Label();
+        endText1.setText("Peli loppui.");
+        endText1.setFont(Font.font(28));
+        
+        Label endText2 = new Label();
+        endText2.setText("Paina nappia aloittaaksesi uuden pelin.");
+        endText2.setFont(Font.font(28));
+        
+        endGrid.add(endText1, 0, 0);
+        endGrid.add(endText2, 0, 1);
+        endGrid.add(startButton, 0, 3);
+        
+        Scene endScreen = new Scene(endGrid);
+        WINDOW.setScene(endScreen);
     }
     
-    public void printField(String[][] field) {
-        for (int y = 0; y < field.length; y++) {
-            for (int x = 0; x < field.length; x++) {
-                System.out.print(field[y][x]);
-            }
-            System.out.println();
-        }
-    }
-
-    public int getFieldSize() {
-        return this.fieldSize;
+    public void createStartButton() {
+        this.startButton = new Button();
+        this.startButton.setText("Aloita peli");
+        this.startButton.setFont(Font.font(32));
+        
+        this.startButton.setOnAction(e->{
+            this.gameScreen = new Scene(this.minesweeperService.createGameScreen());
+            this.WINDOW.setScene(this.gameScreen);
+        });
     }
     
+    @Override
+    public void stop() {
+        Platform.exit();
+    }
     
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
