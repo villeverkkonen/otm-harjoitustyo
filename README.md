@@ -5,6 +5,8 @@ Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
 ## Dokumentaatio
 [Vaatimusmaarittely](dokumentaatio/vaatimusmaarittely.md)
 <br />
+[Arkkitehtuurikuvaus](dokumentaatio/arkkitehtuuri.md)
+<br />
 [Työaikakirjanpito](dokumentaatio/tyoaikakirjanpito.md)
 <br />
 
