@@ -1,6 +1,7 @@
 
-package minesweeper;
+package minesweeper.domain;
 
+import minesweeper.gui.Minesweeper;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.StackPane;

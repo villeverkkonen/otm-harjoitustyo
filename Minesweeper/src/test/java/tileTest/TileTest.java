@@ -4,7 +4,7 @@ package tileTest;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import minesweeper.Tile;
+import minesweeper.domain.Tile;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;

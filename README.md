@@ -14,7 +14,7 @@ Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
 
 Komento
 ```
-mvn compile exec:java -Dexec.mainClass=minesweeper.Minesweeper
+mvn compile exec:java -Dexec.mainClass=minesweeper.gui.Minesweeper
 ```
 avaa ohjelman
 

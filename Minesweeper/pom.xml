@@ -20,7 +20,7 @@
               <configuration>
                   <archive>
                       <manifest>
-                          <mainClass>minesweeper.Minesweeper</mainClass>
+                          <mainClass>minesweeper.gui.Minesweeper</mainClass>
                       </manifest>
                   </archive>
               </configuration>
@@ -31,7 +31,7 @@
             <version>0.8.0</version>
             <configuration>
                 <excludes>
-                    <exclude>minesweeper/Minesweeper.class</exclude>
+                    <exclude>minesweeper/gui/*</exclude>
                 </excludes>
             </configuration>
             <executions>

@@ -1,8 +1,9 @@
 
-package minesweeper;
+package minesweeper.service;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
+import minesweeper.domain.Tile;
 
 public class MinesweeperService {
     

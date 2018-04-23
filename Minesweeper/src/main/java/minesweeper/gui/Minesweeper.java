@@ -1,5 +1,5 @@
 
-package minesweeper;
+package minesweeper.gui;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import minesweeper.service.MinesweeperService;
 
 public class Minesweeper extends Application {
     
@@ -85,7 +86,7 @@ public class Minesweeper extends Application {
         this.startButton.setText("Aloita peli");
         this.startButton.setFont(Font.font(32));
         
-        this.startButton.setOnAction(e->{
+        this.startButton.setOnAction(e-> {
             this.gameScreen = new Scene(this.minesweeperService.createGameScreen());
             this.WINDOW.setScene(this.gameScreen);
         });
