@@ -4,6 +4,7 @@ package minesweeper.service;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import minesweeper.domain.Tile;
+import minesweeper.gui.Minesweeper;
 
 public class MinesweeperService {
     
@@ -15,9 +16,11 @@ public class MinesweeperService {
     private static final int Y_TILES = HEIGHT / TILE_SIZE;
     
     private Tile[][] grid;
+    private final UserService userService;
     
-    public MinesweeperService() {
+    public MinesweeperService(UserService userService) {
         grid = new Tile[X_TILES][Y_TILES];
+        this.userService = userService;
     }
 
     public Parent createGameScreen() {
@@ -28,14 +31,23 @@ public class MinesweeperService {
             for (int x = 0; x < X_TILES; x++) {
                 Tile tile = new Tile(x, y, Math.random() < 0.2, TILE_SIZE, X_TILES, Y_TILES, this.grid);
                 
-                grid[x][y] = tile;
+                tile.setOnMouseClicked(e -> {
+                    if (tile.isOpen()) {
+                        return;
+                    }
+                    tile.open();
+                    if (tile.hasBomb()) {
+                        Minesweeper.endGame();
+                    }
+                });
+                this.grid[x][y] = tile;
                 gameScreen.getChildren().add(tile);
             }
         }
         
         for (int y = 0; y < Y_TILES; y++) {
             for (int x = 0; x < X_TILES; x++) {
-                Tile tile = grid[x][y];
+                Tile tile = this.grid[x][y];
                 
                 if (tile.hasBomb()) {
                     continue;
@@ -52,7 +64,26 @@ public class MinesweeperService {
         return gameScreen;
     }
     
-    public void endGame() {
+    // This method gets called when game ends, add score to user
+    // Every opened tile is one score except for the bomb tile
+    public void countOpenTiles() {
+        int openTiles = 0;
         
+        for (int y = 0; y < Y_TILES; y++) {
+            for (int x = 0; x < X_TILES; x++) {
+                Tile tile = this.grid[x][y];
+                if (tile.isOpen()) {
+                    openTiles++;
+                }
+            }
+        }
+        
+        // If the first and only tile wasn't a bomb, decrease points by one
+        // Bomb doesn't give a score
+        if (openTiles > 0) {
+            this.userService.getUser().setScore(openTiles - 1);
+        } else {
+            this.userService.getUser().setScore(openTiles);
+        }
     }
 }

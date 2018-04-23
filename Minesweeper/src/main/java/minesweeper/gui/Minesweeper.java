@@ -10,36 +10,40 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import minesweeper.domain.User;
 import minesweeper.service.MinesweeperService;
+import minesweeper.service.UserService;
 
 public class Minesweeper extends Application {
     
-    private MinesweeperService minesweeperService;
-    private static Stage WINDOW;
-    private Scene startScreen, gameScreen, endScreen;
-    private static Button startButton;
+    private static MinesweeperService minesweeperService;
+    private static UserService userService;
+    private static Stage window;
+    private static Scene startScreen, gameScreen, endScreen;
     
     @Override
     public void init() throws Exception {
-        this.minesweeperService = new MinesweeperService();
+        userService = new UserService();
+        minesweeperService = new MinesweeperService(userService);
     }
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        createStartButton();
+        // createStartButton();
         
-        this.WINDOW = primaryStage;
-        this.WINDOW.setTitle("Miinaharava");
-        this.startScreen = new Scene(createStartScreen());
+        window = primaryStage;
+        window.setTitle("Miinaharava");
+        startScreen = new Scene(createStartScreen());
         
-        this.WINDOW.setScene(this.startScreen);
-        this.WINDOW.show();
+        window.setScene(startScreen);
+        window.show();
     }
     
-    public Parent createStartScreen() {
+    public static Parent createStartScreen() {
         GridPane startGrid = new GridPane();
         startGrid.setAlignment(Pos.CENTER);
         startGrid.setHgap(10);
@@ -48,16 +52,32 @@ public class Minesweeper extends Application {
         startGrid.setPrefSize(600, 600);
         
         Label infoText = new Label();
-        infoText.setText("Paina nappia aloittaaksesi pelin.");
+        infoText.setText("Nimimerkki:");
         infoText.setFont(Font.font(32));
         
+        TextField nicknameField = new TextField ();
+        
+        Button startButton = new Button();
+        startButton.setText("Aloita peli");
+        startButton.setFont(Font.font(32));
+        
+        startButton.setOnAction(e-> {
+            userService.createUser(nicknameField.getText());
+            nicknameField.setText("");
+            gameScreen = new Scene(minesweeperService.createGameScreen());
+            window.setScene(gameScreen);
+        });
+        
         startGrid.add(infoText, 0, 0);
-        startGrid.add(this.startButton, 0, 3);
+        startGrid.add(nicknameField, 0, 1);
+        startGrid.add(startButton, 0, 3);
         
         return startGrid;
     }
     
     public static void endGame() {
+        minesweeperService.countOpenTiles();
+        
         GridPane endGrid = new GridPane();
         endGrid.setAlignment(Pos.CENTER);
         endGrid.setHgap(10);
@@ -70,27 +90,40 @@ public class Minesweeper extends Application {
         endText1.setFont(Font.font(28));
         
         Label endText2 = new Label();
-        endText2.setText("Paina nappia aloittaaksesi uuden pelin.");
+        User user = userService.getUser();
+        endText2.setText(user.getNickname() + ": " + user.getScore() + " pistettä.");
         endText2.setFont(Font.font(28));
+        
+        Label endText3 = new Label();
+        endText3.setText("Paina nappia aloittaaksesi uuden pelin.");
+        endText3.setFont(Font.font(28));
+        
+        Button startButton = new Button();
+        startButton.setText("Aloita peli");
+        startButton.setFont(Font.font(32));
+        
+        startButton.setOnAction(e-> {
+            window.setScene(startScreen);
+        });
         
         endGrid.add(endText1, 0, 0);
         endGrid.add(endText2, 0, 1);
         endGrid.add(startButton, 0, 3);
         
-        Scene endScreen = new Scene(endGrid);
-        WINDOW.setScene(endScreen);
+        endScreen = new Scene(endGrid);
+        window.setScene(endScreen);
     }
     
-    public void createStartButton() {
-        this.startButton = new Button();
-        this.startButton.setText("Aloita peli");
-        this.startButton.setFont(Font.font(32));
-        
-        this.startButton.setOnAction(e-> {
-            this.gameScreen = new Scene(this.minesweeperService.createGameScreen());
-            this.WINDOW.setScene(this.gameScreen);
-        });
-    }
+//    public void createStartButton() {
+//        this.startButton = new Button();
+//        this.startButton.setText("Aloita peli");
+//        this.startButton.setFont(Font.font(32));
+//        
+//        this.startButton.setOnAction(e-> {
+//            this.gameScreen = new Scene(this.minesweeperService.createGameScreen());
+//            this.window.setScene(this.gameScreen);
+//        });
+//    }
     
     @Override
     public void stop() {

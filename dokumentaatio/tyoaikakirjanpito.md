@@ -7,4 +7,6 @@
 | 14.4. | 1	   | JavaFX:n käyttöönottoa |
 | 16.4. | 3    | Suht toimiva graafinen UI jo |
 | 17.4. | 2    | Peli loppuu kun pommin avaa |
-|		| = 11,5|		   |
+| 23.4. | 3	   | Pakkausten järjestely, testejä, User-luokka |
+| 23.4. | 1,5  | Pisteiden lasku pelin lopussa |
+|		| = 16 |		   |

@@ -1,11 +1,11 @@
 
-package minesweeperServiceTest;
+package serviceTest;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import minesweeper.service.MinesweeperService;
-import minesweeper.domain.Tile;
+import minesweeper.service.UserService;
 import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,8 @@ public class MinesweeperServiceTest extends ApplicationTest {
      
     @Before
     public void setUp() throws Exception {
-        minesweeperService = new MinesweeperService();
+        UserService userService = new UserService();
+        minesweeperService = new MinesweeperService(userService);
     }
     
     @Override

@@ -1,5 +1,5 @@
 
-package tileTest;
+package domainTest;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

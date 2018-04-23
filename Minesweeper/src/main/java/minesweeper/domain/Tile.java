@@ -1,7 +1,6 @@
 
 package minesweeper.domain;
 
-import minesweeper.gui.Minesweeper;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.StackPane;
@@ -18,7 +17,7 @@ public class Tile extends StackPane {
     private final int xTiles;
     private final int yTiles;
 
-    private final Rectangle border;
+    private Rectangle border;
     private Text text = new Text();
     private Tile[][] grid;
 
@@ -43,7 +42,7 @@ public class Tile extends StackPane {
         this.setTranslateX(x * this.tileSize);
         this.setTranslateY(y * this.tileSize);
         
-        setOnMouseClicked(e -> open());
+//        setOnMouseClicked(e -> open());
     }
     
     public void open() {
@@ -57,10 +56,6 @@ public class Tile extends StackPane {
         
         if (this.text.getText().isEmpty()) {
             getNeighbours(this, this.grid).forEach(Tile::open);
-        }
-        
-        if (this.hasBomb) {
-            Minesweeper.endGame();
         }
     }
     
@@ -111,5 +106,13 @@ public class Tile extends StackPane {
     
     public void setText(String text) {
         this.text.setText(text);
+    }
+    
+    public boolean isOpen() {
+        return this.isOpen;
+    }
+    
+    public Rectangle getRectangleBorder() {
+        return this.border;
     }
 }
