@@ -22,10 +22,13 @@ public class Minesweeper extends Application {
     private static Button startButton;
     
     @Override
+    public void init() throws Exception {
+        this.minesweeperService = new MinesweeperService();
+    }
+    
+    @Override
     public void start(Stage primaryStage) throws Exception {
         createStartButton();
-        
-        this.minesweeperService = new MinesweeperService();
         
         this.WINDOW = primaryStage;
         this.WINDOW.setTitle("Miinaharava");

@@ -1,31 +1,38 @@
 
 package minesweeperServiceTest;
 
-import org.junit.After;
-import org.junit.AfterClass;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import minesweeper.MinesweeperService;
+import minesweeper.Tile;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.testfx.framework.junit.ApplicationTest;
 
-public class MinesweeperServiceTest {
+public class MinesweeperServiceTest extends ApplicationTest {
     
-    public MinesweeperServiceTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+    Pane pane;
+    MinesweeperService minesweeperService;
+     
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        minesweeperService = new MinesweeperService();
     }
     
-    @After
-    public void tearDown() {
+    @Override
+    public void start(Stage stage) {
+        pane = new Pane();
+        Scene scene = new Scene(pane, 600, 600);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Test
+    public void canCreateGameScreen() {
+        Scene scene = new Scene(minesweeperService.createGameScreen());
+        
+        assertNotNull(scene);
     }
 }

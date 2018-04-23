@@ -13,10 +13,10 @@ public class MinesweeperService {
     private static final int X_TILES = WIDTH / TILE_SIZE;
     private static final int Y_TILES = HEIGHT / TILE_SIZE;
     
-    private Tile[][] grid = new Tile[X_TILES][Y_TILES];
+    private Tile[][] grid;
     
     public MinesweeperService() {
-        
+        grid = new Tile[X_TILES][Y_TILES];
     }
 
     public Parent createGameScreen() {
