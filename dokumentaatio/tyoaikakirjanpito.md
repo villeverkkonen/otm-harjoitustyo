@@ -9,4 +9,5 @@
 | 17.4. | 2    | Peli loppuu kun pommin avaa |
 | 23.4. | 3	   | Pakkausten järjestely, testejä, User-luokka |
 | 23.4. | 1,5  | Pisteiden lasku pelin lopussa |
-|		| = 16 |		   |
+| 24.4. | 0,5  | Sekvenssikaavio ja GitHub release |
+|		| = 16,5 |		   |
