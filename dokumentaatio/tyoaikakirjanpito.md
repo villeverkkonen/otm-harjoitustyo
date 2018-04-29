@@ -10,4 +10,5 @@
 | 23.4. | 3	   | Pakkausten järjestely, testejä, User-luokka |
 | 23.4. | 1,5  | Pisteiden lasku pelin lopussa |
 | 24.4. | 0,5  | Sekvenssikaavio ja GitHub release |
-|		| = 16,5 |		   |
+| 29.4. | 4    | Tietokanta |
+|    =	| 20,5 |		   |

@@ -1,10 +1,20 @@
 
 package minesweeper.domain;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
+@DatabaseTable(tableName = "User")
 public class User {
     
+    @DatabaseField(id = true, columnName = "nickname")
     private String nickname;
+    @DatabaseField(columnName = "score")
     private int score;
+    
+    public User() {
+        
+    }
     
     public User(String nickname) {
         this.nickname = nickname;

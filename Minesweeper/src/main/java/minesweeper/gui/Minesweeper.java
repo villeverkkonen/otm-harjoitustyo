@@ -1,6 +1,14 @@
 
 package minesweeper.gui;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
@@ -14,14 +22,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import minesweeper.domain.Highscore;
 import minesweeper.domain.User;
+import minesweeper.service.HighscoreService;
 import minesweeper.service.MinesweeperService;
 import minesweeper.service.UserService;
 
 public class Minesweeper extends Application {
-    
+
     private static MinesweeperService minesweeperService;
     private static UserService userService;
+    private static HighscoreService highscoreService;
     private static Stage window;
     private static Scene startScreen, gameScreen, endScreen;
     
@@ -29,12 +40,27 @@ public class Minesweeper extends Application {
     public void init() throws Exception {
         userService = new UserService();
         minesweeperService = new MinesweeperService(userService);
+        highscoreService = new HighscoreService();
+        
+        try {
+            JdbcPooledConnectionSource connectionSource 
+                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            
+            TableUtils.createTableIfNotExists(connectionSource, User.class);
+            TableUtils.createTableIfNotExists(connectionSource, Highscore.class);
+            
+//            try {
+//            connectionSource.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
     
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        // createStartButton();
-        
+    public void start(Stage primaryStage) throws Exception {        
         window = primaryStage;
         window.setTitle("Miinaharava");
         startScreen = new Scene(createStartScreen());
@@ -43,7 +69,7 @@ public class Minesweeper extends Application {
         window.show();
     }
     
-    public static Parent createStartScreen() {
+    public Parent createStartScreen() {
         GridPane startGrid = new GridPane();
         startGrid.setAlignment(Pos.CENTER);
         startGrid.setHgap(10);
@@ -94,9 +120,49 @@ public class Minesweeper extends Application {
         endText2.setText(user.getNickname() + ": " + user.getScore() + " pistettä.");
         endText2.setFont(Font.font(28));
         
+        Highscore highscore = new Highscore(user.getNickname(), user.getScore());
+        List<Highscore> highscores = new ArrayList<>();
+        
+        try {
+            JdbcPooledConnectionSource connectionSource 
+                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            
+            Dao<Highscore, Long> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
+            highscoreDao.create(highscore);
+            highscores = highscoreDao.queryForAll();
+            
+//            try {
+//            connectionSource.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        Collections.sort(highscores, Highscore.COMPARE_BY_SCORE);
+        
         Label endText3 = new Label();
-        endText3.setText("Paina nappia aloittaaksesi uuden pelin.");
-        endText3.setFont(Font.font(28));
+        StringBuilder highscoreText = new StringBuilder();
+        highscoreText.append("Highscores:" + "\n");
+        
+        for (int i = 0; i < highscores.size(); i++) {
+            String nickname = highscores.get(i).getNickname();
+            int score = highscores.get(i).getScore();
+            highscoreText.append(nickname);
+            highscoreText.append(" = ");
+            highscoreText.append(score);
+            highscoreText.append("\n");
+            if (i >= 4) {
+                break;
+            }
+        }
+        endText3.setText(highscoreText.toString());
+        endText3.setFont(Font.font(22));
+        
+        Label endText4 = new Label();
+        endText4.setText("Paina nappia aloittaaksesi uuden pelin.");
+        endText4.setFont(Font.font(28));
         
         Button startButton = new Button();
         startButton.setText("Aloita peli");
@@ -108,22 +174,12 @@ public class Minesweeper extends Application {
         
         endGrid.add(endText1, 0, 0);
         endGrid.add(endText2, 0, 1);
-        endGrid.add(startButton, 0, 3);
+        endGrid.add(endText3, 0, 2);
+        endGrid.add(startButton, 0, 4);
         
         endScreen = new Scene(endGrid);
         window.setScene(endScreen);
     }
-    
-//    public void createStartButton() {
-//        this.startButton = new Button();
-//        this.startButton.setText("Aloita peli");
-//        this.startButton.setFont(Font.font(32));
-//        
-//        this.startButton.setOnAction(e-> {
-//            this.gameScreen = new Scene(this.minesweeperService.createGameScreen());
-//            this.window.setScene(this.gameScreen);
-//        });
-//    }
     
     @Override
     public void stop() {

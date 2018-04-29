@@ -1,9 +1,14 @@
 
 package minesweeper.service;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import java.sql.SQLException;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import minesweeper.domain.Tile;
+import minesweeper.domain.User;
 import minesweeper.gui.Minesweeper;
 
 public class MinesweeperService {
@@ -16,7 +21,7 @@ public class MinesweeperService {
     private static final int Y_TILES = HEIGHT / TILE_SIZE;
     
     private Tile[][] grid;
-    private final UserService userService;
+    private UserService userService;
     
     public MinesweeperService(UserService userService) {
         grid = new Tile[X_TILES][Y_TILES];
@@ -81,9 +86,24 @@ public class MinesweeperService {
         // If the first and only tile wasn't a bomb, decrease points by one
         // Bomb doesn't give a score
         if (openTiles > 0) {
-            this.userService.getUser().setScore(openTiles - 1);
+            this.userService.setScoreToUser(openTiles - 1);
         } else {
-            this.userService.getUser().setScore(openTiles);
+            this.userService.setScoreToUser(openTiles);
+        }
+        
+        try {
+            JdbcPooledConnectionSource connectionSource 
+                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            Dao<User, Long> userDao = DaoManager.createDao(connectionSource, User.class);
+            userDao.update(this.userService.getUser());
+            
+//            try {
+//                connectionSource.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
