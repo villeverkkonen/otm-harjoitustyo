@@ -8,6 +8,8 @@ import java.util.Comparator;
 @DatabaseTable(tableName = "Highscore")
 public class Highscore {
     
+    public static final String NICKNAME_FIELD_NAME = "nickname";
+    
     @DatabaseField(id = true, columnName = "nickname")
     private String nickname;
     @DatabaseField(columnName = "score")

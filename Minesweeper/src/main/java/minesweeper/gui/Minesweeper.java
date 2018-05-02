@@ -4,6 +4,8 @@ package minesweeper.gui;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -127,20 +129,28 @@ public class Minesweeper extends Application {
             JdbcPooledConnectionSource connectionSource 
                 = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
             
-            Dao<Highscore, Long> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
-            highscoreDao.create(highscore);
-            highscores = highscoreDao.queryForAll();
+            Dao<Highscore, String> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
+            QueryBuilder<Highscore, String> queryBuilder = highscoreDao.queryBuilder();
+            queryBuilder.where().eq(Highscore.NICKNAME_FIELD_NAME, highscore.getNickname());
+            List<Highscore> highscoreList = queryBuilder.query();
             
-//            try {
-//            connectionSource.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+            if (highscoreList.size() > 0) {
+                Highscore foundHighscore = highscoreList.get(0);
+                if (foundHighscore.getScore() < highscore.getScore()) {
+                    UpdateBuilder<Highscore, String> updateBuilder = highscoreDao.updateBuilder();
+                    updateBuilder.where().eq("nickname", foundHighscore.getNickname());
+                    updateBuilder.updateColumnValue("score", highscore.getScore());
+                    updateBuilder.update();
+                }
+            } else {
+                highscoreDao.create(highscore);
+                highscores = highscoreDao.queryForAll();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         
-        Collections.sort(highscores, Highscore.COMPARE_BY_SCORE);
+        highscores = highscoreService.getTopFiveSorted(highscores);
         
         Label endText3 = new Label();
         StringBuilder highscoreText = new StringBuilder();
@@ -165,7 +175,7 @@ public class Minesweeper extends Application {
         endText4.setFont(Font.font(28));
         
         Button startButton = new Button();
-        startButton.setText("Aloita peli");
+        startButton.setText("Uusi peli");
         startButton.setFont(Font.font(32));
         
         startButton.setOnAction(e-> {

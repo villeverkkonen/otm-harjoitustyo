@@ -7,6 +7,8 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "User")
 public class User {
     
+    public static final String NICKNAME_FIELD_NAME = "nickname";
+    
     @DatabaseField(id = true, columnName = "nickname")
     private String nickname;
     @DatabaseField(columnName = "score")

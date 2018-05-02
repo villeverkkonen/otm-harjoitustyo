@@ -21,9 +21,10 @@ public class HighscoreService {
         
         Collections.sort(highscores, Highscore.COMPARE_BY_SCORE);
         
-        if (highscores.size() > 5) {
-            for (int i = 0; i < 5; i++) {
-                topFive.add(highscores.get(i));
+        for (int i = 0; i < highscores.size(); i++) {
+            topFive.add(highscores.get(i));
+            if (i >= 4) {
+                break;
             }
         }
         
