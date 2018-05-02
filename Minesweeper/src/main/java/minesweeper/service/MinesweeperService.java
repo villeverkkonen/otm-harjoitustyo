@@ -3,7 +3,7 @@ package minesweeper.service;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import java.sql.SQLException;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
@@ -92,8 +92,8 @@ public class MinesweeperService {
         }
         
         try {
-            JdbcPooledConnectionSource connectionSource 
-                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            JdbcConnectionSource connectionSource 
+                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
             Dao<User, Long> userDao = DaoManager.createDao(connectionSource, User.class);
             userDao.update(this.userService.getUser());
             

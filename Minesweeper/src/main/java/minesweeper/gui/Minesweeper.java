@@ -3,13 +3,12 @@ package minesweeper.gui;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.table.TableUtils;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
@@ -45,22 +44,21 @@ public class Minesweeper extends Application {
         highscoreService = new HighscoreService();
         
         try {
-            JdbcPooledConnectionSource connectionSource 
-                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            JdbcConnectionSource connectionSource 
+                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
             
             TableUtils.createTableIfNotExists(connectionSource, User.class);
             TableUtils.createTableIfNotExists(connectionSource, Highscore.class);
-            
-//            try {
-//            connectionSource.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     
+    /**
+     * Metodi käynnistää graafisen käyttöliittymän
+     * @param primaryStage
+     * @throws Exception 
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {        
         window = primaryStage;
@@ -71,6 +69,10 @@ public class Minesweeper extends Application {
         window.show();
     }
     
+    /**
+     * Metodi luo aloitusikkunan
+     * @return GridPane, joka sisältää aloitusikkunan näkymät
+     */
     public Parent createStartScreen() {
         GridPane startGrid = new GridPane();
         startGrid.setAlignment(Pos.CENTER);
@@ -103,6 +105,9 @@ public class Minesweeper extends Application {
         return startGrid;
     }
     
+    /**
+     * Metodi hoitaa pelin lopetuksen ja uuden pelin aloituksen
+     */
     public static void endGame() {
         minesweeperService.countOpenTiles();
         
@@ -126,8 +131,8 @@ public class Minesweeper extends Application {
         List<Highscore> highscores = new ArrayList<>();
         
         try {
-            JdbcPooledConnectionSource connectionSource 
-                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            JdbcConnectionSource connectionSource 
+                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
             
             Dao<Highscore, String> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
             QueryBuilder<Highscore, String> queryBuilder = highscoreDao.queryBuilder();

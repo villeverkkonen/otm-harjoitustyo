@@ -16,6 +16,11 @@ public class HighscoreService {
         
     }
     
+    /**
+     * 
+     * @param highscores Kaikki highscoret
+     * @return TOP-5 suurimmasta pienempään
+     */
     public List<Highscore> getTopFiveSorted(List<Highscore> highscores) {
         List<Highscore> topFive = new ArrayList<>();
         

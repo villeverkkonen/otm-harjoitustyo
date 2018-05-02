@@ -4,6 +4,9 @@ package minesweeper.domain;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+/**
+ * Luokka on tietokantaan tallennettava käyttäjä
+ */
 @DatabaseTable(tableName = "User")
 public class User {
     

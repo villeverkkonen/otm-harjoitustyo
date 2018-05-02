@@ -5,6 +5,9 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 import java.util.Comparator;
 
+/**
+ * Luokka on tietokantaan tallennettava käyttäjän pistemäärä
+ */
 @DatabaseTable(tableName = "Highscore")
 public class Highscore {
     

@@ -1,3 +1,8 @@
+```
+2.5.2018 - Suoritettava jar-tiedosto ei toimi tällä hetkellä tietokannan kanssa.
+NetBeansissa sovellus toimii moitteettomasti.
+```
+
 # Miinaharava
 
 Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
@@ -42,6 +47,14 @@ Komento
 mvn package
 ```
 generoi hakemistoon *target* suoritettavan jar-tiedoston *Minesweeper-1.0-SNAPSHOT.jar*
+
+### JavaDoc
+
+JavaDoc generoidaan komennolla
+```
+mvn javadoc:javadoc
+```
+JavaDocia voi tarkastella avaamalla selaimella tiedosto target/site/apidocs/index.html
 
 ### Checkstyle
 

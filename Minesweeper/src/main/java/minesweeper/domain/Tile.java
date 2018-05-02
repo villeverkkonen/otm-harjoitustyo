@@ -45,6 +45,9 @@ public class Tile extends StackPane {
 //        setOnMouseClicked(e -> open());
     }
     
+    /**
+     * Metodi avaa klikatun ruudun ja mahdolliset viereiset tyhjät ruudut
+     */
     public void open() {
         if (this.isOpen) {
             return;
@@ -59,6 +62,12 @@ public class Tile extends StackPane {
         }
     }
     
+    /**
+     * Metodi käy läpi valitun ruudun naapuriruudut
+     * @param tile klikattu ruutu
+     * @param grid ruudukko, joka sisältää kaikki ruudut
+     * @return palauttaa tiedot naapureista
+     */
     public List<Tile> getNeighbours(Tile tile, Tile[][] grid) {
         List<Tile> neighbours = new ArrayList<>();
         

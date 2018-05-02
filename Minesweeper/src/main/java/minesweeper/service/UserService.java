@@ -3,7 +3,7 @@ package minesweeper.service;
 
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import java.sql.SQLException;
@@ -18,11 +18,16 @@ public class UserService {
         
     }
     
+    /**
+     * Metodi luo uuden käyttäjän,
+     * tai päivittää samalla nimimerkillä olevan käyttäjän scoren nollaksi.
+     * @param nickname Pelaajan syöttämä nimimerkki
+     */
     public void createUser(String nickname) {
         this.user = new User(nickname);
         try {
-            JdbcPooledConnectionSource connectionSource 
-                = new JdbcPooledConnectionSource("jdbc:h2:mem:minesweeper;DB_CLOSE_DELAY=-1");
+            JdbcConnectionSource connectionSource 
+                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
             
             Dao<User, String> userDao = DaoManager.createDao(connectionSource, User.class);
             QueryBuilder<User, String> queryBuilder = userDao.queryBuilder();
