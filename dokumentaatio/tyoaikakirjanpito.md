@@ -11,4 +11,5 @@
 | 23.4. | 1,5  | Pisteiden lasku pelin lopussa |
 | 24.4. | 0,5  | Sekvenssikaavio ja GitHub release |
 | 29.4. | 4    | Tietokanta |
-|    =	| 20,5 |		   |
+| 2.5.	| 2    | Highscorea, JavaDoc, tietokanta ei toimikaan jar-tiedostossa |
+|    =	| 22,5 |		   |
