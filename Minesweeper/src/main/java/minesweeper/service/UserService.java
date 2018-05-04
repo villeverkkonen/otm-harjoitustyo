@@ -27,7 +27,7 @@ public class UserService {
         this.user = new User(nickname);
         try {
             JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
+                = new JdbcConnectionSource("jdbc:h2:mem:account");
             
             Dao<User, String> userDao = DaoManager.createDao(connectionSource, User.class);
             QueryBuilder<User, String> queryBuilder = userDao.queryBuilder();

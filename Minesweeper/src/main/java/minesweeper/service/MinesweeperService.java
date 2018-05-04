@@ -93,15 +93,9 @@ public class MinesweeperService {
         
         try {
             JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
+                = new JdbcConnectionSource("jdbc:h2:mem:account");
             Dao<User, Long> userDao = DaoManager.createDao(connectionSource, User.class);
             userDao.update(this.userService.getUser());
-            
-//            try {
-//                connectionSource.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

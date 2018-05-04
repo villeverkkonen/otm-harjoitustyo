@@ -45,7 +45,7 @@ public class Minesweeper extends Application {
         
         try {
             JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
+                = new JdbcConnectionSource("jdbc:h2:mem:account");
             
             TableUtils.createTableIfNotExists(connectionSource, User.class);
             TableUtils.createTableIfNotExists(connectionSource, Highscore.class);
@@ -132,7 +132,7 @@ public class Minesweeper extends Application {
         
         try {
             JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account;DB_CLOSE_DELAY=-1");
+                = new JdbcConnectionSource("jdbc:h2:mem:account");
             
             Dao<Highscore, String> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
             QueryBuilder<Highscore, String> queryBuilder = highscoreDao.queryBuilder();

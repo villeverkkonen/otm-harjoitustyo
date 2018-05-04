@@ -1,8 +1,3 @@
-```
-2.5.2018 - Suoritettava jar-tiedosto ei toimi tällä hetkellä tietokannan kanssa.
-NetBeansissa sovellus toimii moitteettomasti.
-```
-
 # Miinaharava
 
 Kurssin harjoitustyönä tehtävä Miinaharava-sovellus.
