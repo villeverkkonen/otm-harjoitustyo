@@ -29,7 +29,7 @@ Komento
 mvn compile exec:java -Dexec.mainClass=minesweeper.gui.Minesweeper
 ```
 avaa ohjelman.
-<br />
+<br /><br />
 Jos olet luonut jar-tiedoston komennolla *mvn package*, voit suorittaa ohjelman *target*-kansiossa:
 ```
 java -jar Minesweeper-1.0-SNAPSHOT.jar
