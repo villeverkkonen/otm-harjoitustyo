@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto minesweeper.jar
+Lataa tiedosto [minesweeper.jar](https://github.com/villeverkkonen/otm-harjoitustyo/releases)
 
 ## Ohjelman käynnistäminen
 
