@@ -35,6 +35,9 @@ public class Highscore {
         return this.nickname;
     }
     
+    /**
+     * Metodi järjestää highscoret suuruusjärjestykseen, eniten pisteitä ensin
+     */
     public static Comparator<Highscore> COMPARE_BY_SCORE = new Comparator<Highscore>() {
         @Override
         public int compare(Highscore one, Highscore other) {

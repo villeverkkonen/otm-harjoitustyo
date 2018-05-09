@@ -9,6 +9,9 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * Luokka on peliruudukolla näkyvä yksi ruutu, jonka voi avata, ja joka voi sisältää pommin tai olla tyhjä
+ */
 public class Tile extends StackPane {
     private final int x, y;
     private final boolean hasBomb;
@@ -21,6 +24,16 @@ public class Tile extends StackPane {
     private Text text = new Text();
     private Tile[][] grid;
 
+    /**
+     * 
+     * @param x Ruudun X-sijainti
+     * @param y Ruudun Y-sijainti
+     * @param hasBomb Onko ruutu tyhjä vai pommi
+     * @param tileSize Ruudun koko
+     * @param xTiles X-akselin ruutujen määrä naapurien tarkkailua varten
+     * @param yTiles Y-akselin ruutujen määrä naapurien tarkkailua varten
+     * @param grid Koko ruudukko kaikkine ruutuineen, jotta voidaan tarkastella naapuriruutuja
+     */
     public Tile(int x, int y, boolean hasBomb, int tileSize, int xTiles, int yTiles, Tile[][] grid) {
         this.x = x;
         this.y = y;
@@ -41,8 +54,6 @@ public class Tile extends StackPane {
         
         this.setTranslateX(x * this.tileSize);
         this.setTranslateY(y * this.tileSize);
-        
-//        setOnMouseClicked(e -> open());
     }
     
     /**
@@ -108,10 +119,6 @@ public class Tile extends StackPane {
     public boolean hasBomb() {
         return hasBomb;
     }
-
-    public Text getText() {
-        return text;
-    }
     
     public void setText(String text) {
         this.text.setText(text);
@@ -120,8 +127,19 @@ public class Tile extends StackPane {
     public boolean isOpen() {
         return this.isOpen;
     }
-    
-    public Rectangle getRectangleBorder() {
-        return this.border;
+
+    // Alla olevia kolmea getteriä käytetään vain testeissä
+    public int getTileSize() {
+        return tileSize;
     }
+
+    public int getXTiles() {
+        return xTiles;
+    }
+
+    public int getYTiles() {
+        return yTiles;
+    }
+    
+    
 }

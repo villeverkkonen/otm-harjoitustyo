@@ -11,17 +11,27 @@ import org.junit.Before;
 import org.junit.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
+/**
+ * Luokka testaa MinesweeperSerivce-luokan testaamisesta
+ */
 public class MinesweeperServiceTest extends ApplicationTest {
     
     Pane pane;
     MinesweeperService minesweeperService;
      
+    /**
+     * Ennen testejä alustetaan minesweeperService
+     */
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         UserService userService = new UserService();
         minesweeperService = new MinesweeperService(userService);
     }
     
+    /**
+     * Metodi käynnistää graafisen käyttöliittymän
+     * @param stage 
+     */
     @Override
     public void start(Stage stage) {
         pane = new Pane();
@@ -30,6 +40,9 @@ public class MinesweeperServiceTest extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * Metodi tarkistaa, että luotu peli-ikkuna ei ole tyhjä
+     */
     @Test
     public void canCreateGameScreen() {
         Scene scene = new Scene(minesweeperService.createGameScreen());

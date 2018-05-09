@@ -12,4 +12,6 @@
 | 24.4. | 0,5  | Sekvenssikaavio ja GitHub release |
 | 29.4. | 4    | Tietokanta |
 | 2.5.	| 2    | Highscorea, JavaDoc, tietokanta ei toimikaan jar-tiedostossa |
-|    =	| 22,5 |		   |
+| 8.5.  | 1    | Testejä   |
+| 9.5.  | 3    | Testejä ja toimintojen siirtämistä Service-luokille |
+|    =	| 26,5 |		   |

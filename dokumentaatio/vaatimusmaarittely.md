@@ -13,10 +13,10 @@ Sovelluksella on ainoastaan yksi käyttäjärooli eli *pelaaja*.
 
 * Pelaaja aloittaa pelin syöttämällä haluamansa nimimerkin
 * Pelin aloitettua pelaajalle avautuu tietyn kokoinen ruudukko
-* Pelaaja ei tiedä, mitä minkäkin ruudun takana on.
+* Pelaaja ei tiedä, mitä minkäkin ruudun takana on
 * Jokaisen ruudun takana on joko tyhjä tila tai pommi
-* Pelaaja avaa ruutuja niin kauan, kunnes avaa pommin tai tyhjiä ruutuja ei ole enää jäljellä
-* Molemmissa tapauksissa peli loppuu, ja pelaajalle näytetään Highscores-lista
+* Pelaaja avaa ruutuja niin kauan, kunnes avaa pommin
+* Peli loppuu kun pommiruutu avataan, jonka jälkeen pelaajalle näytetään TOP-5 Highscores-lista
 * Pelaajan pisteet määräytyvät avattujen tyhjien tilojen mukaan
 * Jos pelaajan pisteet riittävät listalle, hän näkee oman nimensä siellä
 <br/>

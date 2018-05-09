@@ -11,6 +11,9 @@ import minesweeper.domain.Tile;
 import minesweeper.domain.User;
 import minesweeper.gui.Minesweeper;
 
+/**
+ * Luokka toteuttaa Tileen liittyviä ja yleisiä toimenpiteitä pelin kannalta
+ */
 public class MinesweeperService {
     
     private static final int TILE_SIZE = 60;
@@ -28,6 +31,10 @@ public class MinesweeperService {
         this.userService = userService;
     }
 
+    /**
+     * Metodi luo peli-ikkunan
+     * @return Pane palauttaa Pane-olion gameScreen ruutuineen ja pommeineen
+     */
     public Parent createGameScreen() {
         Pane gameScreen = new Pane();
         gameScreen.setPrefSize(WIDTH, HEIGHT);
@@ -68,9 +75,11 @@ public class MinesweeperService {
         
         return gameScreen;
     }
-    
-    // This method gets called when game ends, add score to user
-    // Every opened tile is one score except for the bomb tile
+
+    /**
+     * Pelin loppuessa tämä metodi laskee avoimet ruudut ja pisteet
+     * Jokainen auki oleva ruutu pommiruutu lukuunottamatta on yksi piste
+     */
     public void countOpenTiles() {
         int openTiles = 0;
         
@@ -83,21 +92,15 @@ public class MinesweeperService {
             }
         }
         
-        // If the first and only tile wasn't a bomb, decrease points by one
-        // Bomb doesn't give a score
+        // Auki olevista ruuduista vähennetään yksi eli pommi,
+        // jos heti ensin avattu ruutu oli pommi, ei vähennetä mitään, ettei mennä miinuspisteille
+        // Pommista ei saa pistettä
         if (openTiles > 0) {
             this.userService.setScoreToUser(openTiles - 1);
         } else {
             this.userService.setScoreToUser(openTiles);
         }
         
-        try {
-            JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account");
-            Dao<User, Long> userDao = DaoManager.createDao(connectionSource, User.class);
-            userDao.update(this.userService.getUser());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        this.userService.updateUser();
     }
 }

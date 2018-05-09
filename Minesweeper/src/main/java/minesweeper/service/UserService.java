@@ -10,6 +10,11 @@ import java.sql.SQLException;
 import java.util.List;
 import minesweeper.domain.User;
 
+/**
+ * Luokka vastaa käyttäjään liittyvistä toimenpiteistä.
+ * luokka pitää muuttujanaan aina yhtä käyttäjää.
+ * Yhdellä pelillä on aina vain yksi käyttäjä
+ */
 public class UserService {
     
     private User user;
@@ -43,6 +48,17 @@ public class UserService {
             } else {
                 userDao.create(this.user);
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void updateUser() {
+        try {
+            JdbcConnectionSource connectionSource 
+                = new JdbcConnectionSource("jdbc:h2:mem:account");
+            Dao<User, Long> userDao = DaoManager.createDao(connectionSource, User.class);
+            userDao.update(this.user);
         } catch (SQLException e) {
             e.printStackTrace();
         }

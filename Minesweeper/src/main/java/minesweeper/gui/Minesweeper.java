@@ -29,6 +29,9 @@ import minesweeper.service.HighscoreService;
 import minesweeper.service.MinesweeperService;
 import minesweeper.service.UserService;
 
+/**
+ * Luokka on sovelluksen pääluokka, joka vastaa graafisesta käyttöliittymästä
+ */
 public class Minesweeper extends Application {
 
     private static MinesweeperService minesweeperService;
@@ -37,12 +40,17 @@ public class Minesweeper extends Application {
     private static Stage window;
     private static Scene startScreen, gameScreen, endScreen;
     
+    /**
+     * Heti sovelluksen käynnistäessä luodaan Servicet ja tietokantataulut
+     * @throws Exception SQL Exception
+     */
     @Override
     public void init() throws Exception {
         userService = new UserService();
         minesweeperService = new MinesweeperService(userService);
         highscoreService = new HighscoreService();
         
+        // Luo aluksi tietokantataulut Userille ja Highscoresille
         try {
             JdbcConnectionSource connectionSource 
                 = new JdbcConnectionSource("jdbc:h2:mem:account");
@@ -71,7 +79,7 @@ public class Minesweeper extends Application {
     
     /**
      * Metodi luo aloitusikkunan
-     * @return GridPane, joka sisältää aloitusikkunan näkymät
+     * @return GridPane sisältää aloitusikkunan näkymät
      */
     public Parent createStartScreen() {
         GridPane startGrid = new GridPane();
@@ -127,34 +135,8 @@ public class Minesweeper extends Application {
         endText2.setText(user.getNickname() + ": " + user.getScore() + " pistettä.");
         endText2.setFont(Font.font(28));
         
-        Highscore highscore = new Highscore(user.getNickname(), user.getScore());
-        List<Highscore> highscores = new ArrayList<>();
-        
-        try {
-            JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account");
-            
-            Dao<Highscore, String> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
-            QueryBuilder<Highscore, String> queryBuilder = highscoreDao.queryBuilder();
-            queryBuilder.where().eq(Highscore.NICKNAME_FIELD_NAME, highscore.getNickname());
-            List<Highscore> highscoreList = queryBuilder.query();
-            
-            if (highscoreList.size() > 0) {
-                Highscore foundHighscore = highscoreList.get(0);
-                if (foundHighscore.getScore() < highscore.getScore()) {
-                    UpdateBuilder<Highscore, String> updateBuilder = highscoreDao.updateBuilder();
-                    updateBuilder.where().eq("nickname", foundHighscore.getNickname());
-                    updateBuilder.updateColumnValue("score", highscore.getScore());
-                    updateBuilder.update();
-                }
-            } else {
-                highscoreDao.create(highscore);
-                highscores = highscoreDao.queryForAll();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
+        highscoreService.createHighscore(user);
+        List<Highscore> highscores = highscoreService.getAllHighscores();
         highscores = highscoreService.getTopFiveSorted(highscores);
         
         Label endText3 = new Label();
@@ -196,11 +178,10 @@ public class Minesweeper extends Application {
         window.setScene(endScreen);
     }
     
-    @Override
-    public void stop() {
-        Platform.exit();
-    }
-    
+    /**
+     * Käynnistää käyttöliittymän
+     * @param args 
+     */
     public static void main(String[] args) {
         launch(args);
     }
