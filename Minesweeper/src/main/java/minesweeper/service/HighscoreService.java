@@ -29,7 +29,7 @@ public class HighscoreService {
     public List<Highscore> getTopFiveSorted(List<Highscore> highscores) {
         List<Highscore> topFive = new ArrayList<>();
         
-        Collections.sort(highscores, Highscore.COMPARE_BY_SCORE);
+        Collections.sort(highscores, Highscore.compareByScore);
         
         for (int i = 0; i < highscores.size(); i++) {
             topFive.add(highscores.get(i));
@@ -47,8 +47,7 @@ public class HighscoreService {
      */
     public void createHighscore(User user) {
         try {
-            JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account");
+            JdbcConnectionSource connectionSource = new JdbcConnectionSource("jdbc:h2:mem:account");
             
             Dao<Highscore, String> highscoreDao = DaoManager.createDao(connectionSource, Highscore.class);
             QueryBuilder<Highscore, String> queryBuilder = highscoreDao.queryBuilder();
@@ -56,10 +55,9 @@ public class HighscoreService {
             List<Highscore> highscoreList = queryBuilder.query();
             
             if (highscoreList.size() > 0) {
-                Highscore foundHighscore = highscoreList.get(0);
-                if (foundHighscore.getScore() < user.getScore()) {
+                if (highscoreList.get(0).getScore() < user.getScore()) {
                     UpdateBuilder<Highscore, String> updateBuilder = highscoreDao.updateBuilder();
-                    updateBuilder.where().eq("nickname", foundHighscore.getNickname());
+                    updateBuilder.where().eq("nickname", highscoreList.get(0).getNickname());
                     updateBuilder.updateColumnValue("score", user.getScore());
                     updateBuilder.update();
                 }
@@ -67,7 +65,6 @@ public class HighscoreService {
                 highscoreDao.create(new Highscore(user.getNickname(), user.getScore()));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
     

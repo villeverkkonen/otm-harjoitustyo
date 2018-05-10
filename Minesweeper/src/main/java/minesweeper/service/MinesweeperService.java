@@ -1,14 +1,9 @@
 
 package minesweeper.service;
 
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcConnectionSource;
-import java.sql.SQLException;
 import javafx.scene.Parent;
 import javafx.scene.layout.Pane;
 import minesweeper.domain.Tile;
-import minesweeper.domain.User;
 import minesweeper.gui.Minesweeper;
 
 /**

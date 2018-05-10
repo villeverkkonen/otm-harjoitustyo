@@ -14,4 +14,5 @@
 | 2.5.	| 2    | Highscorea, JavaDoc, tietokanta ei toimikaan jar-tiedostossa |
 | 8.5.  | 1    | Testejä   |
 | 9.5.  | 3    | Testejä ja toimintojen siirtämistä Service-luokille |
-|    =	| 26,5 |		   |
+| 10.5. | 1    | Dokumentointia |
+|    =	| 27,5 |		   |

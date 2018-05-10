@@ -31,8 +31,7 @@ public class UserService {
     public void createUser(String nickname) {
         this.user = new User(nickname);
         try {
-            JdbcConnectionSource connectionSource 
-                = new JdbcConnectionSource("jdbc:h2:mem:account");
+            JdbcConnectionSource connectionSource = new JdbcConnectionSource("jdbc:h2:mem:account");
             
             Dao<User, String> userDao = DaoManager.createDao(connectionSource, User.class);
             QueryBuilder<User, String> queryBuilder = userDao.queryBuilder();
@@ -40,9 +39,8 @@ public class UserService {
             List<User> userList = queryBuilder.query();
             
             if (userList.size() > 0) {
-                User foundUser = userList.get(0);
                 UpdateBuilder<User, String> updateBuilder = userDao.updateBuilder();
-                updateBuilder.where().eq("nickname", foundUser.getNickname());
+                updateBuilder.where().eq("nickname", userList.get(0).getNickname());
                 updateBuilder.updateColumnValue("score", 0);
                 updateBuilder.update();
             } else {

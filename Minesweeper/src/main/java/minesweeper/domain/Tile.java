@@ -83,14 +83,7 @@ public class Tile extends StackPane {
         List<Tile> neighbours = new ArrayList<>();
         
         int[] points = new int[] {
-            -1, -1,
-            -1, 0,
-            -1, 1,
-            0, -1,
-            0, 1,
-            1, -1,
-            1, 0,
-            1, 1
+            -1, -1, -1, 0, -1, 1, 0, -1, 0, 1, 1, -1, 1, 0, 1, 1
         };
         
         for (int i = 0; i < points.length; i++) {

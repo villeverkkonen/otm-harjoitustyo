@@ -38,7 +38,7 @@ public class Highscore {
     /**
      * Metodi järjestää highscoret suuruusjärjestykseen, eniten pisteitä ensin
      */
-    public static Comparator<Highscore> COMPARE_BY_SCORE = new Comparator<Highscore>() {
+    public static Comparator<Highscore> compareByScore = new Comparator<Highscore>() {
         @Override
         public int compare(Highscore one, Highscore other) {
             return other.getScore() - one.getScore();
