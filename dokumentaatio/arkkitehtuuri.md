@@ -4,7 +4,7 @@
 
 Ohjelman rakenne noudattelee kolmitasoista kerrosarkkitehtuuria, ja koodin pakkausrakenne kuvataan seuraavassa luokkakaaviossa:
 <br />
-![luokkakaavio](http://yuml.me/58c2f5f3.png)
+![luokkakaavio1](https://github.com/villeverkkonen/otm-harjoitustyo/dokumentaatio/kuvat/luokkakaavio-01.png)
 
 ## Käyttöliittymä
 
@@ -25,9 +25,9 @@ Sovelluksen loogisen datamallin muodostavat luokat User ja Highscore, joiden lis
 
 Toiminnallisista kokonaisuuksista vastaavat Service-luokat, eli UserService, HighscoreService sekä MinesweeperService.
 
-Sekvenssikaavio osoittaa, kuinka UserService hoitaa Userin asioita:
+Seuraava luokkakaavio osoittaa, kuinka UserService- ja User-luokat liittyvät toisiinsa:
 <br />
-![sekvenssikaavio1](http://yuml.me/345b7cbd.png)
+![luokkakaavio2](https://github.com/villeverkkonen/otm-harjoitustyo/dokumentaatio/kuvat/luokkakaavio-02.png)
 
 ## Tietojen pysyväistallennus
 
@@ -47,17 +47,15 @@ Painikkeen painamiseen reagoiva tapahtumankäsittelijä kutsuu [UserServicen](ht
 <br />
 Tämän jälkeen tekstikenttä tyhjennetään, ettei annettu nimimerkki ole valmiina siinä kun seuraava peli aloitetaan. Sitten aloitusruutu vaihdetaan peliruuduksi ja peli alkaa.
 
-<br />
-
 ### Pelin loppuminen
 
 Kun peli loppuu, eli pelaaja avaa pommiruudun, kutsutaan [MinesweeperServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/MinesweeperService.java) metodia *countOpenTiles*, joka laskee avatut ruudut eli pisteet ja asettaa [UserServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/UserService.java) metodilla *setScoreToUser* uudet pisteet Userille.
 <br />
 Sitten haetaan [UserServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/UserService.java) metodilla *getUser* User-olio talteen.
-<br /><br />
+<br />
 
 Tämän jälkeen Userille luodaan Highscore [HighscoreServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/HighscoreService.java) metodilla *createHighscore* joka saa parametrikseen Userin.
-<br /><br />
+<br />
 
 Kun Highscore on luotu, haetaan kaikki Highscoret talteen [HighscoreServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/HighscoreService.java) metodilla *getAllHighscores*, jonka jälkeen ne karsitaan ja järjestetään vielä TOP-5 järjestykseen metodilla *getTopFiveSorted*, joka saa parametrikseen listan kaikista Highscoreista.
 

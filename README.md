@@ -36,7 +36,7 @@ Jos olet luonut jar-tiedoston komennolla *mvn package*, voit suorittaa ohjelman 
 ```
 java -jar Minesweeper-1.0-SNAPSHOT.jar
 ```
-Tai voit suoraan ladata suoritettevan [minesweeper.jar](https://github.com/villeverkkonen/otm-harjoitustyo/releases)-tiedoston.
+Tai voit suoraan ladata suoritettevan [minesweeper.jar](https://github.com/villeverkkonen/otm-harjoitustyo/releases/tag/loppupalautus)-tiedoston.
 
 ### Testaus
 

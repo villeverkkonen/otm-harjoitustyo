@@ -11,7 +11,8 @@ Testit testaavat myös tietokantaa, joka toimii H2:lla ja ORMLitellä.
 
 ### Tastauskattavuus
 
-Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 86% ja haarautumakattavuus 67%
+Käyttöliittymäkerrosta lukuunottamatta sovelluksen testauksen rivikattavuus on 86% ja haarautumakattavuus 67%.
+<br />
 ![testikattavuus](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/testikattavuus.png)
 
 Testaamatta jäi lähinnä käyttöliittymään liittyviä asioita.

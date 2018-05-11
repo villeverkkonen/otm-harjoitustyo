@@ -15,4 +15,5 @@
 | 8.5.  | 1    | Testejä   |
 | 9.5.  | 3    | Testejä ja toimintojen siirtämistä Service-luokille |
 | 10.5. | 1    | Dokumentointia |
-|    =	| 27,5 |		   |
+| 11.5. | 1    | Arkkitehtuurikuvausta ja loppuhiomista |
+|    =	| 28,5 |		   |
