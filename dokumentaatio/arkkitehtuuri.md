@@ -4,8 +4,7 @@
 
 Ohjelman rakenne noudattelee kolmitasoista kerrosarkkitehtuuria, ja koodin pakkausrakenne kuvataan seuraavassa luokkakaaviossa:
 <br />
-![luokkakaavio1](https://github.com/villeverkkonen/otm-harjoitustyo/dokumentaatio/kuvat/luokkakaavio-01.png)
-
+![luokkakaavio1](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/luokkakaavio-01.png)
 ## Käyttöliittymä
 
 Käyttöliittymä sisältää korme erillistä näkymää
@@ -27,7 +26,7 @@ Toiminnallisista kokonaisuuksista vastaavat Service-luokat, eli UserService, Hig
 
 Seuraava luokkakaavio osoittaa, kuinka UserService- ja User-luokat liittyvät toisiinsa:
 <br />
-![luokkakaavio2](https://github.com/villeverkkonen/otm-harjoitustyo/dokumentaatio/kuvat/luokkakaavio-02.png)
+![luokkakaavio2](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/luokkakaavio-02.png)
 
 ## Tietojen pysyväistallennus
 
