@@ -7,12 +7,12 @@ Ohjelman rakenne noudattelee kolmitasoista kerrosarkkitehtuuria, ja koodin pakka
 ![luokkakaavio1](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/dokumentaatio/kuvat/luokkakaavio-01.png)
 ## Käyttöliittymä
 
-Käyttöliittymä sisältää korme erillistä näkymää
-* Aloituruutu
+Käyttöliittymä sisältää kolme erillistä näkymää:
+* Aloitusruutu
 * Peliruutu
 * Lopetusruutu
 
-jokainen näistä on toteutettu omana Scene-oliona. Näkymistä yksi kerrallaan on näkyvänä eli sihoitettuna sovelluksen stageen.
+Jokainen näistä on toteutettu omana Scene-oliona. Näkymistä yksi kerrallaan on näkyvänä eli sijoitettuna sovelluksen stageen.
 Käyttöliittymä on rakennettu ohjelmallisesti luokassa [minesweeper.gui.Minesweeper](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/gui/Minesweeper.java).
 <br />
 Käyttöliittymä on pyritty eristämään sovelluslogiikasta mahdollisimman hyvin, jolloin Service-luokat huolehtivat sovelluslogiikasta.
@@ -30,7 +30,7 @@ Seuraava luokkakaavio osoittaa, kuinka UserService- ja User-luokat liittyvät to
 
 ## Tietojen pysyväistallennus
 
-Service-luokat hoitavat User- ja Highscore-olioiden tallennuksen tietokantaan ja sieltä hakemisen ja päivittämisen.
+Service-luokat hoitavat User- ja Highscore-olioiden tallennuksen tietokantaan ja sieltä hakemisen sekä päivittämisen.
 
 Tietokantana toimii H2 ja ORMLite. Tietokanta tyhjenee aina kun sovelluksen sammuttaa.
 
@@ -40,9 +40,9 @@ Kuvataan seuraavaksi sovelluksen toimintalogiikka muutaman päätoiminnallisuude
 
 ### Pelin aloittaminen
 
-Kun käyttäjä syöttää haluamansa nimimerkin ja painaa *Aloita peli* -nappia etenee sovelluksen kontrolliseuraavasti:
+Kun käyttäjä syöttää haluamansa nimimerkin ja painaa *Aloita peli* -painiketta etenee sovelluksen toiminta seuraavasti:
 
-Painikkeen painamiseen reagoiva tapahtumankäsittelijä kutsuu [UserServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/UserService.java) metodia *createUser* antaen parametriksi kenttään syötetyn nimimerkin. Uudella käyttäjällä on oletuksena 0 pistettä. Jos tietokannasta löytyy käyttäjä jo kyseisellä nimimerkillä, päivitetään hänen pisteensä nollaksi.
+Painikkeen painamiseen reagoiva tapahtumankäsittelijä kutsuu [UserServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/UserService.java) metodia *createUser*, parametrinä kenttään syötetty nimimerkki. Uudella käyttäjällä on oletuksena 0 pistettä. Jos tietokannasta löytyy käyttäjä jo kyseisellä nimimerkillä, päivitetään hänen pisteensä nollaksi.
 <br />
 Tämän jälkeen tekstikenttä tyhjennetään, ettei annettu nimimerkki ole valmiina siinä kun seuraava peli aloitetaan. Sitten aloitusruutu vaihdetaan peliruuduksi ja peli alkaa.
 
@@ -58,4 +58,4 @@ Tämän jälkeen Userille luodaan Highscore [HighscoreServicen](https://github.c
 
 Kun Highscore on luotu, haetaan kaikki Highscoret talteen [HighscoreServicen](https://github.com/villeverkkonen/otm-harjoitustyo/blob/master/Minesweeper/src/main/java/minesweeper/service/HighscoreService.java) metodilla *getAllHighscores*, jonka jälkeen ne karsitaan ja järjestetään vielä TOP-5 järjestykseen metodilla *getTopFiveSorted*, joka saa parametrikseen listan kaikista Highscoreista.
 
-Lopuksi luodaan lopetusruutu teksteineen ja TOP-5 Highscore listoineen ja nappi, josta voi siirtyä takaisin aloitusruutuun ja aloittaa uuden pelin.
+Lopuksi luodaan lopetusruutu teksteineen ja TOP-5 Highscore -lista sekä painike, josta voi siirtyä takaisin aloitusruutuun ja aloittaa uuden pelin.
